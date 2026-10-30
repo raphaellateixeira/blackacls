@@ -35,15 +35,25 @@ As duas páginas mandam o lead para o webhook do n8n da Última:
 https://n8n.agenciaultima.com.br/webhook/a1817a13-d8d1-459e-aafd-c97f38145184
 ```
 
-O envio é um POST com corpo JSON em `text/plain`, modo `no-cors`, com estes campos:
+O envio é um POST em `application/x-www-form-urlencoded`, modo `no-cors`, então o n8n recebe o corpo já separado em campos, sem precisar de parse. Os campos são estes:
 
 | Campo | O que traz |
 |---|---|
-| `nome`, `email`, `telefone` | o que a pessoa digitou, telefone só com dígitos |
-| `pagina` | a URL da página, é o que separa a oficial da versão `/v1` |
-| `aba` | `black_acls_2026`, o nome da aba de destino na planilha |
+| `first_name` | o nome digitado |
+| `email` | o e-mail digitado |
+| `phone` | só os dígitos, com o + na frente quando for número de fora do Brasil |
+| `utm_source`, `utm_medium`, `utm_content`, `utm_term`, `utm_campaign`, `utm_campaign_id` | as UTMs do anúncio |
+| `src` | o parâmetro completo de origem |
+| `full_url` | a URL inteira, com a query |
+| `query_string` | só a query, começando com ? |
+| `submitted_at` | data e hora do envio, em ISO |
 | `event_id` | o mesmo id enviado no evento Lead do pixel, para deduplicar na API de Conversões |
-| UTMs | `src`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `utm_campaign_id`, `fbclid`, `gclid` |
+| `evento` | `BlackACLS` |
+| `fbclid`, `fbp`, `fbc`, `user_agent` | o que a API de Conversões precisa para casar o evento |
+
+Todos os campos vão sempre, em branco quando não existirem, para a posição das colunas nunca mudar.
+
+O `full_url` é o que separa a página oficial da versão `/v1`, porque as duas mandam o mesmo `evento`.
 
 Como o envio é `no-cors`, a página não lê a resposta do webhook: ela segue para a página de obrigado assim que a requisição parte, ou depois de 2,5 segundos, o que vier primeiro. Ou seja, o lead nunca fica preso esperando o n8n.
 
@@ -101,7 +111,7 @@ As UTMs ficam guardadas na sessão, seguem para a página de obrigado e são gra
 1. As duas páginas respondem e as imagens carregam.
 2. No celular, o formulário inteiro aparece sem rolar. Medido em 390x664 e em 360x640 antes de entregar.
 3. Pixel ativo: abrir o console e rodar `fbq.getState().pixels`. Deve aparecer o 537192752151289.
-4. Marco ou alguém do time faz um cadastro de teste em cada versão e confere: a execução no n8n, a linha na aba `black_acls_2026` e o evento Lead no Testar Eventos do Gerenciador.
+4. Marco ou alguém do time faz um cadastro de teste em cada versão e confere: a execução no n8n, a linha na planilha e o evento Lead no Testar Eventos do Gerenciador.
 5. Clicar no botão da página de obrigado e confirmar que entra no grupo.
 
 ## 6 · Pendências do projeto, fora do pacote

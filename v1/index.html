@@ -389,8 +389,8 @@ footer{background:var(--preto);border-top:1px solid var(--linha-d);padding:26px 
 <script>
 /* Captura de lead padrão da Última */
 var CAPTURA = {
-  PLANILHA: "https://n8n.agenciaultima.com.br/webhook/a1817a13-d8d1-459e-aafd-c97f38145184",
-  ABA: "black_acls_2026",
+  WEBHOOK: "https://n8n.agenciaultima.com.br/webhook/a1817a13-d8d1-459e-aafd-c97f38145184",
+  EVENTO: "BlackACLS",
   PIXEL: "537192752151289",
   DESTINO: "obrigado.html"
 };
@@ -446,16 +446,26 @@ document.querySelectorAll('form.formulario').forEach(function (form) {
     botao.disabled = true; botao.textContent = 'Reservando...';
     var eventId = 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
     var lead = {
-      nome: nome, email: email, telefone: fone,
-      pagina: location.href.split('?')[0],
-      url_completa: location.href,
-      aba: CAPTURA.ABA,
+      first_name: nome,
+      email: email,
+      phone: fone,
+      utm_source: UTMS.utm_source || '',
+      utm_medium: UTMS.utm_medium || '',
+      utm_content: UTMS.utm_content || '',
+      utm_term: UTMS.utm_term || '',
+      utm_campaign: UTMS.utm_campaign || '',
+      utm_campaign_id: UTMS.utm_campaign_id || '',
+      src: UTMS.src || '',
+      full_url: location.href,
+      query_string: location.search,
+      submitted_at: new Date().toISOString(),
       event_id: eventId,
+      evento: CAPTURA.EVENTO,
+      fbclid: UTMS.fbclid || '',
       fbp: cookie('_fbp'),
       fbc: cookie('_fbc') || (UTMS.fbclid ? 'fb.1.' + Date.now() + '.' + UTMS.fbclid : ''),
       user_agent: navigator.userAgent
     };
-    Object.keys(UTMS).forEach(function (k) { lead[k] = UTMS[k]; });
     if (window.fbq) fbq('track', 'Lead', { source: UTMS.utm_source || 'direto' }, { eventID: eventId });
     var foi = false;
     function seguir() {
@@ -464,7 +474,7 @@ document.querySelectorAll('form.formulario').forEach(function (form) {
       Object.keys(UTMS).forEach(function (k) { p.append(k, UTMS[k]); });
       location.href = CAPTURA.DESTINO + (CAPTURA.DESTINO.indexOf('?') > -1 ? '&' : '?') + p.toString();
     }
-    fetch(CAPTURA.PLANILHA, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(lead) }).then(seguir, seguir);
+    fetch(CAPTURA.WEBHOOK, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(lead) }).then(seguir, seguir);
     setTimeout(seguir, 2500);
   });
 });
