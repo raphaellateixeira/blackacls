@@ -4,23 +4,25 @@ Páginas de captação da Black Friday do Prof. Marco Campos. Duas versões no m
 
 | Rota | O que é | Atalho |
 |---|---|---|
-| `/` | Versão 1, fundo branco, paleta azul e verde do perpétuo | `/a` |
-| `/obrigado` | Obrigado da versão 1 | |
-| `/v2/` | Versão 2, fundo preto, estrutura da referência, formulário compacto | `/b` |
-| `/v2/obrigado` | Obrigado da versão 2 | |
+| `/` | **Página oficial.** Fundo preto, vermelho, formulário compacto | `/a` |
+| `/obrigado` | Obrigado da página oficial | |
+| `/v1/` | Versão alternativa, fundo branco, paleta azul e verde do perpétuo | `/b` |
+| `/v1/obrigado` | Obrigado da versão alternativa | |
 | `/grupo` | Redireciona direto para o grupo do WhatsApp | |
+
+A versão vermelha ficou em `/v2` no primeiro deploy. Um redirecionamento 301 mantém qualquer link antigo funcionando.
 
 Live de revelação: quinta, 12 de novembro de 2026, às 20h.
 
 ## Arquivos
 
 ```
-index.html          versão 1
-obrigado.html       obrigado da versão 1
-img/                foto do Marco (recorte, turma, apontando)
-v2/index.html       versão 2
-v2/obrigado.html    obrigado da versão 2
-v2/img/             capas dos 4 cursos, foto em aula, 7 depoimentos
+index.html          página oficial, versão vermelha
+obrigado.html       obrigado da página oficial
+img/                capas dos 4 cursos, foto em aula, 7 depoimentos
+v1/index.html       versão alternativa, branca
+v1/obrigado.html    obrigado da versão alternativa
+v1/img/             foto do Marco (recorte, turma, apontando)
 netlify.toml        publish, cache e redirecionamentos
 apps-script.gs      receptor da planilha de leads
 ```
@@ -28,7 +30,7 @@ apps-script.gs      receptor da planilha de leads
 ## Antes de subir, três coisas faltam
 
 1. **Aba na planilha de leads** com o nome exato `black_acls_2026`. Se a aba não existir com esse nome, o lead cai na primeira aba da planilha.
-2. **URL da implantação do Apps Script**, para substituir `COLAR_URL_DA_IMPLANTACAO_DO_APPS_SCRIPT` em `index.html` e em `v2/index.html`.
+2. **URL da implantação do Apps Script**, para substituir `COLAR_URL_DA_IMPLANTACAO_DO_APPS_SCRIPT` em `index.html` e em `v1/index.html`.
 3. **Repositório vazio** no GitHub do Raphael.
 
 O link do grupo e o ID do pixel já estão nos arquivos.
@@ -85,7 +87,7 @@ https://black.descomplicaacls.com.br/?utm_source=meta&utm_medium=cpc&utm_campaig
 ```
 
 ```
-https://black.descomplicaacls.com.br/v2/?utm_source=meta&utm_medium=cpc&utm_campaign=black_acls_2026&utm_content=lpB
+https://black.descomplicaacls.com.br/v1/?utm_source=meta&utm_medium=cpc&utm_campaign=black_acls_2026&utm_content=lpB
 ```
 
 As UTMs ficam guardadas na sessão, seguem para a página de obrigado e são gravadas na planilha junto com o lead.
