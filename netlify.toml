@@ -1,0 +1,39 @@
+[build]
+  publish = "."
+
+# ---- cache ----
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/v2/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ---- atalhos ----
+# /grupo leva direto para o grupo do WhatsApp, útil em bio e mensagem
+[[redirects]]
+  from = "/grupo"
+  to = "https://chat.whatsapp.com/IZByUk1hHwG9KpM9WC3M3U"
+  status = 302
+  force = true
+
+# atalhos curtos para os anúncios: /a = versão 1, /b = versão 2
+[[redirects]]
+  from = "/a"
+  to = "/"
+  status = 302
+
+[[redirects]]
+  from = "/b"
+  to = "/v2/"
+  status = 302
