@@ -100,12 +100,6 @@ h1 .mark{background:var(--vermelho);color:var(--branco);padding:.02em .12em 0;li
 .campos .full{grid-column:1/-1}
 .campos input{width:100%;font:inherit;font-size:16px;padding:12px 13px;border:1px solid #D4D4D4;
   border-radius:9px;background:#FAFAFA;color:var(--tinta);min-width:0}
-.campos select{width:100%;font:inherit;font-size:16px;padding:12px 13px;border:1px solid #D4D4D4;
-  border-radius:9px;background:#FAFAFA;color:var(--tinta);min-width:0;-webkit-appearance:none;appearance:none;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='%23525252' d='M1 1l5 5 5-5'/></svg>");
-  background-repeat:no-repeat;background-position:right 12px center;background-size:11px;padding-right:32px}
-.campos select:invalid{color:#8A8A8A}
-.campos select:focus{outline:2px solid var(--vermelho);outline-offset:1px;background-color:var(--branco)}
 .campos input::placeholder{color:#8A8A8A}
 .campos input:focus{outline:2px solid var(--vermelho);outline-offset:1px;background:var(--branco)}
 .btn-form{margin-top:11px;display:block;width:100%;border:0;font:inherit;cursor:pointer;
@@ -326,24 +320,6 @@ details p{margin:11px 0 0;font-size:15.5px;color:#404040;line-height:1.6}
           <div class="full">
             <label class="sr" for="email">Seu melhor e-mail</label>
             <input id="email" name="email" type="email" autocomplete="email" placeholder="Seu melhor e-mail" required>
-          </div>
-          <div>
-            <label class="sr" for="profissao">Qual sua profissão</label>
-            <select id="profissao" name="profissao" required>
-              <option value="" selected disabled>Sua profissão</option>
-              <option value="Medico">Médico</option>
-              <option value="Enfermeiro">Enfermeiro</option>
-              <option value="Estudante">Estudante</option>
-              <option value="Outro">Outro</option>
-            </select>
-          </div>
-          <div>
-            <label class="sr" for="fez_acls">Já fez o ACLS?</label>
-            <select id="fez_acls" name="fez_acls" required>
-              <option value="" selected disabled>Fez o ACLS?</option>
-              <option value="Sim">Sim</option>
-              <option value="Nao">Não</option>
-            </select>
           </div>
         </div>
         <input type="text" name="site" class="sr" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -646,11 +622,8 @@ document.querySelectorAll('form.formulario').forEach(function (form) {
     var nome = form.nome.value.trim(), email = form.email.value.trim();
     var intl = tel.value.trim().charAt(0) === '+';
     var fone = tel.value.replace(/\D/g, '');
-    var profissao = form.profissao ? form.profissao.value : '';
-    var fezAcls = form.fez_acls ? form.fez_acls.value : '';
     var ok = nome.length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && (intl ? fone.length >= 8 : fone.length >= 10);
     if (!ok) { alert('Preencha nome, e-mail e WhatsApp com DDD.\nFora do Brasil? Comece com + e o código do país.'); return; }
-    if (!profissao || !fezAcls) { alert('Responde as duas últimas perguntas para continuar.'); return; }
     if (intl) fone = '+' + fone;
     var botao = form.querySelector('button[type=submit]');
     botao.disabled = true; botao.textContent = 'Reservando...';
@@ -671,8 +644,6 @@ document.querySelectorAll('form.formulario').forEach(function (form) {
       submitted_at: new Date().toISOString(),
       event_id: eventId,
       evento: CAPTURA.EVENTO,
-      profissao: profissao,
-      fez_acls: fezAcls,
       fbclid: UTMS.fbclid || '',
       fbp: cookie('_fbp'),
       fbc: cookie('_fbc') || (UTMS.fbclid ? 'fb.1.' + Date.now() + '.' + UTMS.fbclid : ''),
