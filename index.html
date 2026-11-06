@@ -180,6 +180,12 @@ h1 .mark{background:var(--vermelho);color:var(--branco);padding:.02em .12em 0;li
 .curso p{margin:6px 0 0;font-size:13.5px;color:var(--cinza);line-height:1.5}
 .tag{margin-top:12px;align-self:flex-start;background:var(--rosa-cl);color:var(--vermelho-e);
   font-weight:800;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.tag.pres{background:var(--preto);color:var(--branco)}
+.divisor{margin:34px 0 0;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cinza);display:flex;align-items:center;gap:14px}
+.divisor::before,.divisor::after{content:"";height:1px;background:#D8DCE1;flex:1}
+.cursos.dois{margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:760px}
+.nota-dois{margin:16px 0 0;font-size:14px;line-height:1.55;color:var(--cinza);max-width:60ch}
 
 /* ---------- passos ---------- */
 .passos{margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
@@ -468,6 +474,25 @@ details p{margin:11px 0 0;font-size:15.5px;color:#404040;line-height:1.6}
         <span class="tag">E-book · vira vitalício</span>
       </div>
     </div>
+
+    <p class="divisor">E ainda dá para garantir, na mesma condição</p>
+
+    <div class="cursos dois">
+      <div class="curso">
+        <img src="img/curso-presencial-aha.jpg" alt="Prof. Marco Campos apontando o traçado no monitor durante o curso presencial de ACLS" loading="lazy">
+        <h3>Curso ACLS Certificado pela AHA</h3>
+        <p>Curso conduzido pelo Prof. Marco Campos.</p>
+        <span class="tag pres">Presencial</span>
+      </div>
+      <div class="curso">
+        <img src="img/mentoria-certificacao.jpg" alt="Prof. Marco Campos conduzindo a mentoria de certificação ACLS" loading="lazy">
+        <h3>Mentoria Certificação ACLS</h3>
+        <p>Revisão personalizada e simulações dos pontos que mais são exigidos na prova oficial.</p>
+        <span class="tag pres">Em grupo</span>
+      </div>
+    </div>
+
+    <p class="nota-dois">Esses dois são presenciais e ao vivo, então não entram no acesso vitalício. Quem estiver na live vê como garantir os dois junto.</p>
   </div>
 </section>
 
