@@ -379,6 +379,30 @@ details .mais,.cxoferta .eyebrow{color:var(--amb-t)}
 .q.esc .big{color:var(--vermelho)}
 
 </style>
+
+<!-- Meta Pixel -->
+<script>
+var PIXEL = "537192752151289";
+var OFERTA = { nome: "Combo ACLS Black 2026", valor: 1697.00, moeda: "BRL" };
+
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', PIXEL);
+fbq('track', 'PageView');
+fbq('track', 'ViewContent', {
+  content_name: OFERTA.nome,
+  content_type: 'product',
+  value: OFERTA.valor,
+  currency: OFERTA.moeda
+});
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=537192752151289&ev=PageView&noscript=1"></noscript>
+<!-- /Meta Pixel -->
 </head>
 <body>
 
@@ -721,6 +745,20 @@ details .mais,.cxoferta .eyebrow{color:var(--amb-t)}
     b.classList.toggle('on', passou && !naOferta);
   }
   ver(); window.addEventListener('scroll',ver,{passive:true});
+})();
+
+// InitiateCheckout no clique do botao de compra
+(function(){
+  var btn = document.querySelector('[data-checkout]');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    if (window.fbq) fbq('track', 'InitiateCheckout', {
+      content_name: OFERTA.nome,
+      content_type: 'product',
+      value: OFERTA.valor,
+      currency: OFERTA.moeda
+    });
+  });
 })();
 </script>
 
